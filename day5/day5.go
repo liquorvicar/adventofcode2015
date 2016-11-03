@@ -35,14 +35,53 @@ func ContainsBannedString(string string) bool {
 	return (bannedStrings > 0)
 }
 
+func ContainsRepeatingPair(inputString string) bool {
+	searchString := inputString
+	var previous rune
+	firstChar := true
+	for _,char := range inputString {
+		searchString = strings.TrimPrefix(searchString, string(char))
+		if firstChar {
+			firstChar = false
+		} else {
+			pair := string(previous) + string(char)
+			if strings.Contains(searchString, pair) {
+				return true
+			}
+		}
+		previous = char
+	}
+	return false
+}
+
+func ContainsSandwichLetter(inputString string) bool {
+	searchString := inputString
+	for _,char := range inputString {
+		searchString = strings.TrimPrefix(searchString, string(char))
+		if strings.Index(searchString, string(char)) == 1 {
+			return true
+		} else {
+			newSearchString := strings.TrimPrefix(searchString, string(char))
+			if strings.Index(newSearchString, string(char)) == 0 {
+				return true
+			}
+		}
+	}
+	return false
+}
+
 func IsNice(string string) bool {
 	return StringHas3Vowels(string) && StringHasRepeatedLetters(string) && ! ContainsBannedString(string)
+}
+
+func IsNicer(string string) bool {
+	return ContainsRepeatingPair(string) && ContainsSandwichLetter(string)
 }
 
 func Day5(strings []string) {
 	niceStrings := 0
 	for _, string := range strings {
-		if IsNice(string) {
+		if IsNicer(string) {
 			niceStrings += 1
 		}
 	}

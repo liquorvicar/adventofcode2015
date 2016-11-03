@@ -1,6 +1,8 @@
 package day5
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestStringHas3Vowels(t *testing.T) {
 	if ! StringHas3Vowels("aeiou") {
@@ -53,6 +55,36 @@ func TestContainsXY(t *testing.T) {
 	}
 }
 
+func TestContainsRepeatingPair(t *testing.T) {
+	if ! ContainsRepeatingPair("xyxy") {
+		t.Error("xyxy DOES contain a repeating pair")
+	}
+}
+
+func TestContainsOverlappingRepeatingPair(t *testing.T) {
+	if ContainsRepeatingPair("aaa") {
+		t.Error("aaa does NOT contain a repeating pair")
+	}
+}
+
+func TestDoesNotContainSandwichLetter(t *testing.T) {
+	if ContainsSandwichLetter("abc") {
+		t.Error("abc does NOT contain sandwich letter")
+	}
+}
+
+func TestContainsSandwichLetter(t *testing.T) {
+	if ! ContainsSandwichLetter("xyx") {
+		t.Error("xyx DOES contain sandwich letter")
+	}
+}
+
+func TestContainsSandwichLetterWithSameLetterAsFilling(t *testing.T) {
+	if ! ContainsSandwichLetter("xxx") {
+		t.Error("xxx DOES contain sandwich letter")
+	}
+}
+
 func TestStringIsNice(t *testing.T) {
 	var inputString string
 	inputString = "ugknbfddgicrmopn"
@@ -73,5 +105,28 @@ func TestStringIsNice(t *testing.T) {
 	inputString = "haegwjzuvuyypxyu"
 	if IsNice(inputString) {
 		t.Errorf("%s is NOT a nice string", inputString)
+	}
+}
+
+func TestStringIsNicer(t *testing.T) {
+	var inputString string
+	inputString = "qjhvhtzxzqqjkmpb"
+	if ! IsNicer(inputString) {
+		t.Errorf("%s IS a nicer string", inputString)
+	}
+
+	inputString = "xxyxx"
+	if ! IsNicer(inputString) {
+		t.Errorf("%s IS a nicer string", inputString)
+	}
+
+	inputString = "uurcxstgmygtbstg"
+	if IsNicer(inputString) {
+		t.Errorf("%s is NOT a nicer string", inputString)
+	}
+
+	inputString = "ieodomkazucvgmuy"
+	if IsNicer(inputString) {
+		t.Errorf("%s is NOT a nicer string", inputString)
 	}
 }

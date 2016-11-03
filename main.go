@@ -1,7 +1,7 @@
 package main
 
 import (
-	"adventofcode/day5"
+	"adventofcode2015/day5"
 	"io/ioutil"
 	"strings"
 )
