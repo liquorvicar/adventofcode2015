@@ -5,24 +5,26 @@ import (
 	"strconv"
 	"strings"
 	"fmt"
+	"time"
 )
 
-func TurnOn(row int, col int, lights [1000][1000]bool) [1000][1000]bool {
-	lights[row][col] = true
-	return lights
+func TurnOn(row int, col int, lights *[1000][1000]int) {
+	lights[row][col] += 1
 }
 
-func TurnOff(row int, col int, lights [1000][1000]bool) [1000][1000]bool {
-	lights[row][col] = false
-	return lights
+func TurnOff(row int, col int, lights *[1000][1000]int) {
+	lights[row][col] -= 1
+	if lights[row][col] < 0 {
+		lights[row][col] = 0
+	}
 }
 
-func Toggle(row int, col int, lights [1000][1000]bool) [1000][1000]bool {
-	lights[row][col] = ! lights[row][col]
-	return lights
+func Toggle(row int, col int, lights *[1000][1000]int) {
+	lights[row][col] += 2
 }
 
-func Process(instruction string, lights [1000][1000]bool, re *regexp.Regexp) [1000][1000]bool {
+func Process(instruction string, lights [1000][1000]int, re *regexp.Regexp) [1000][1000]int {
+	println("Starting: ", time.Now().Format(time.UnixDate))
 	bounds := re.FindAllString(instruction, -1)
 	startRow, err := strconv.Atoi(bounds[0])
 	if err != nil {
@@ -40,6 +42,7 @@ func Process(instruction string, lights [1000][1000]bool, re *regexp.Regexp) [10
 	if err != nil {
 		panic("Invalid end col")
 	}
+	println("Parsed params: ", time.Now().Format(time.UnixDate))
 	var command string
 	if strings.HasPrefix(instruction, "turn on") {
 		command = "turn on"
@@ -49,31 +52,32 @@ func Process(instruction string, lights [1000][1000]bool, re *regexp.Regexp) [10
 		command = "toggle"
 	}
 	for row := startRow; row <= endRow; row++ {
+		println("Starting row: ", time.Now().Format(time.UnixDate))
 		for col := startCol; col <= endCol; col++ {
 			switch command {
-			case "turn on": lights = TurnOn(row, col, lights)
-			case "turn off": lights = TurnOff(row, col, lights)
-			case "toggle": lights = Toggle(row, col, lights)
+			case "turn on": TurnOn(row, col, &lights)
+			case "turn off": TurnOff(row, col, &lights)
+			case "toggle": Toggle(row, col, &lights)
 			}
 		}
+		println("Finished row: ", time.Now().Format(time.UnixDate))
 	}
 	return lights
 }
 
-func CountLightsOn(lights [1000][1000]bool) int {
+func CountLightsOn(lights [1000][1000]int) int {
 	number := 0
 	for _,col := range lights {
 		for _,light := range col {
-			if light {
-				number += 1
-			}
+			number += light
 		}
 	}
 	return number
 }
 
+
 func Day6(instructions []string) {
-	var lights [1000][1000]bool
+	var lights [1000][1000]int
 	re := regexp.MustCompile(`[0-9]+`)
 	for i,instruction := range instructions {
 		fmt.Printf("Processing instruction %d: %s\n", i, instruction)
