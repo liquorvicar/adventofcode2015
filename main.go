@@ -3,14 +3,14 @@ package main
 import (
 	"io/ioutil"
 	"strings"
-	"adventofcode2015/day8"
+	"adventofcode2015/day9"
 )
 
 func main() {
-	content, err := ioutil.ReadFile("day8/data.txt")
+	content, err := ioutil.ReadFile("day9/data.txt")
 	if err != nil {
 		panic(err)
 	}
 	lines := strings.Split(string(content), "\n")
-	day8.Process(lines)
+	day9.Process(lines)
 }
