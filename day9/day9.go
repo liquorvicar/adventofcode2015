@@ -82,10 +82,30 @@ func shortestDistance(allRoutes map[string]int, allDistances map[string]int) int
 	return shortest
 }
 
+func longestDistance(allRoutes map[string]int, allDistances map[string]int) int {
+	longest := 0
+	for route := range allRoutes {
+		distance := 0
+		destinations := strings.Split(route, "-")
+		for i,destination := range destinations {
+			if i == 0 {
+				continue
+			}
+			journey := destinations[i-1] + "," + destination
+			thisDistance,_ := allDistances[journey]
+			distance += thisDistance
+		}
+		if distance > longest {
+			longest = distance
+		}
+	}
+	return longest
+}
+
 func Process(inputStrings []string) {
 	allRoutes := allRoutes(parseCities(inputStrings))
 	allDistances := allDistances(inputStrings)
-	shortest := shortestDistance(allRoutes, allDistances)
-	fmt.Printf("Shortest distance is %d\n", shortest)
+	shortest := longestDistance(allRoutes, allDistances)
+	fmt.Printf("Longest distance is %d\n", shortest)
 
 }
