@@ -16,12 +16,19 @@ func parseString(inputString string) (int,int) {
 	return utf8.RuneCountInString(inputString),utf8.RuneCountInString(parsedString)
 }
 
+func CalcExtraEncodingCount(inputString string) int {
+	count := 2
+	count += strings.Count(inputString, `\`)
+	count += strings.Count(inputString, `"`)
+	return count
+}
+
 func Process(lines []string) {
 	answer := 0
 	for _,inputString := range lines {
-		numLiteral,numMemory := parseString(inputString)
-		fmt.Printf("String %s has %d literals and %d chars\n", inputString, numLiteral, numMemory)
-		answer += (numLiteral - numMemory)
+		thisCount := CalcExtraEncodingCount(inputString)
+		fmt.Printf("%s contains %d extra chars\n", inputString, thisCount)
+		answer += thisCount
 	}
 	fmt.Printf("Answer is %d\n", answer)
  }
