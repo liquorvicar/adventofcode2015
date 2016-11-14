@@ -12,5 +12,5 @@ func main() {
 	//	panic(err)
 	//}
 	//lines := strings.Split(string(content), "\n")
-	day11.Process("hxbxwxba")
+	day11.Process("hxbxxyzz")
 }
