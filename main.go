@@ -3,7 +3,7 @@ package main
 import (
 	//"io/ioutil"
 	//"strings"
-	"adventofcode/day10"
+	"adventofcode/day11"
 )
 
 func main() {
@@ -12,5 +12,5 @@ func main() {
 	//	panic(err)
 	//}
 	//lines := strings.Split(string(content), "\n")
-	day10.Process("3113322113")
+	day11.Process("hxbxwxba")
 }
