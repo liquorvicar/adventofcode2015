@@ -3,6 +3,7 @@ package day10
 import (
 	"strconv"
 	"fmt"
+	"time"
 )
 
 func LookAndSay(inputString string) string {
@@ -24,11 +25,13 @@ func LookAndSay(inputString string) string {
 
 func RepeatLookAndSay(inputString string, count int) int {
 	for i := 1; i <= count; i++ {
+		startTime := time.Now()
 		inputString = LookAndSay(inputString)
+		fmt.Printf("Iteration %d completed in %d\n", i, time.Since(startTime).Seconds())
 	}
 	return len(inputString)
 }
 
 func Process(inputString string) {
-	fmt.Printf("Length of final string is %d\n", RepeatLookAndSay(inputString, 40))
+	fmt.Printf("Length of final string is %d\n", RepeatLookAndSay(inputString, 50))
 }
